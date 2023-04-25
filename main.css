@@ -1,0 +1,15 @@
+#occupied {
+    background-color: rgb(255, 43, 43);
+    width: 80px;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
+
+#available {
+    background-color: rgb(56, 220, 114);
+    width: 80px;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
