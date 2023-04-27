@@ -8,6 +8,7 @@ class Hotel {
     private string $_postalCode;
     private string $_city;
     private array $_rooms;
+    private array $_reservations;
 
     // Constructeur
     public function __construct(string $hotelName, string $hotelRating, string $adress, string $postalCode, string $city) {
@@ -17,22 +18,38 @@ class Hotel {
         $this->_postalCode = $postalCode;
         $this->_city = $city;
         $this->_rooms = [];
+        $this->_reservations = [];
     }
     
     // Méthodes
     public function __toString() {
-        return "<div style='font-size:20px'>".$this->_hotelName." ".$this->_hotelRating." ".$this->_city."</div><br/>";
+        return $this->hotelTitle();
+    }
+
+    public function hotelTitle() {
+        return " ".$this->_hotelName." ".$this->_hotelRating." ".$this->_city." "; // Fonction de concaténation du nom, du grade et de la ville de l'Hotel 
     }
 
     public function getInfosHotel(){
-        
-        return $this." ".
-        $this->_adress." ".$this->_postalCode." ".strtoupper($this->_city)." <br/>";
+        $roomsCount = count($this->_rooms);
+        $reservationsCount = count($this->_reservations);
+        $roomsAvailable = $roomsCount - $reservationsCount;
+
+        return "<div style='font-size:20px'>".$this."</div><br/> ".
+        $this->getAdress()." ".$this->getPostalCode()." ".strtoupper($this->_city)." <br/>
+        Nombre de chambre : ".$roomsCount."<br/>
+        Nombre de chambre réservées : ".$reservationsCount."<br/>
+        Nombre de chambre disponibles :".$roomsAvailable."<br/>";
+
     }
 
     public function addRooms(Chambre $room) {
         $this->_rooms[] = $room;
     }
+
+    public function addReservation(Réservation $reservation) {
+        $this->_reservations[] = $reservation;
+    } 
     
     // Getters et Setters
     public function getHotelName() {
