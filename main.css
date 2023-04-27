@@ -13,3 +13,11 @@
     font-size: 12px;
     text-align: center;
 }
+
+#reservations {
+    background-color: rgb(56, 220, 114);
+    width: 80px;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
