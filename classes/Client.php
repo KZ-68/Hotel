@@ -18,12 +18,28 @@ class Client {
     public function __toString() {
         return $this->getNomComplet(); 
     }
-    public function clientReservation() {
-        $result = "<p>Réservation de $this</p>";
+
+    public function getClientReservation() {
+        $results = "Réservation de $this<br/>";
+        
+        $reservationNumber = count($this->_reservations); // Compte le nombre de réservations
+        
+        if ($reservationNumber == 0){
+            $results .= "Aucune réservation !";
+        } else if ($reservationNumber == 1){
+            $results .= "<div id='reservations'>$reservationNumber Réservation</div><br/>";
+        } else $results .= "<div id='reservations'>$reservationNumber Réservations</div><br/>";
+
+        $priceTotal = 0; // Initialise une variable pour le prix total des réservations
+        
         foreach ($this->_reservations as $reservation) {
-            $result .= $reservation->getRoom(). $reservation->week()."<br/>";
+            $results .= $reservation->getRoom(). " / ".$reservation->getRoom()->getRoomNumber()." (".$reservation->getRoom()->getBedNumber()." lits - ".$reservation->getRoom()->getPrice(). " € - Wifi : ".$reservation->getRoom()->statusRoomWifi().") ".$reservation->week()."";
+            $priceTotal += $reservation->calculPrice(); // Attribut la valeur de la fonction calculPrice de l'objet Réservation
         }
-        return $result;
+
+        $results .= "Total : $priceTotal €";
+
+        return $results;
     }
 
     public function getNomComplet() {
@@ -45,4 +61,5 @@ class Client {
     public function setClientLastName($clientLastName) {
         $this->_clientLastName = $clientLastName;
     }
+
 }
