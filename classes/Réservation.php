@@ -6,9 +6,9 @@ class Réservation {
     private Client $_client;
     private Chambre $_room;
 
-    private static int $_reservationCount = 0;
-
     public function __construct(string $dateArrived, string $dateDeparture, Client $client, Chambre $room) {
+        $hotel = $room->getHotel();
+        
         $this->_dateArrived = new DateTime($dateArrived);
         $this->_dateDeparture = new DateTime($dateDeparture);
         $this->_client = $client;
@@ -16,8 +16,7 @@ class Réservation {
 
         $this->_client->addReservation($this);
         $this->_room->addReservation($this); 
-
-        self::$_reservationCount++;
+        $hotel->addReservation($this);
     }
 
     public function week() {
@@ -36,10 +35,6 @@ class Réservation {
         }
         
         return $price ;
-    }
-
-    public static function getReservationCount() {
-        echo self::$_reservationCount++;
     }
 
     public function getDateArrived(){
