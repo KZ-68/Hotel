@@ -40,7 +40,25 @@ class Hotel {
         Nombre de chambre : ".$roomsCount."<br/>
         Nombre de chambre réservées : ".$reservationsCount."<br/>
         Nombre de chambre disponibles :".$roomsAvailable."<br/>";
+    }
 
+    // Méthode pour afficher les réservations d'un Hotel
+    public function reservationHotel() {
+        $results = "<div style='font-size:20px'>Réservation de $this</div>";
+
+        $reservationNumber = count($this->_reservations); // Compte le nombre de réservations
+
+        if ($reservationNumber == 0){ // En fonction du nbr de réservations, récupère la valeur de la variable et l'affiche
+            $results .= "Aucune réservation ! <br/>";
+        } else if ($reservationNumber == 1){
+            $results .= "<div id='reservations'>$reservationNumber Réservation</div><br/>";
+        } else $results .= "<div id='reservations'>$reservationNumber Réservations</div><br/>";
+        
+        foreach ($this->_reservations as $reservation) {
+            $results .= $reservation->getClient()." - ".$reservation->getRoom()->getRoomNumber()." - ".$reservation->week();
+        }
+
+        return $results;
     }
 
     public function addRooms(Chambre $room) {
