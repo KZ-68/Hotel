@@ -54,12 +54,47 @@ class Hotel {
             $results .= "<div id='reservations'>$reservationNumber Réservation</div><br/>";
         } else $results .= "<div id='reservations'>$reservationNumber Réservations</div><br/>";
         
-        foreach ($this->_reservations as $reservation) {
+        // Accède à chaque réservation et récupère le __toString de l'objet Client, le numéro de chambre en accédant par chaînage de méthodes, et la fonction week() de l'Objet Réservation 
+        foreach ($this->_reservations as $reservation) { 
             $results .= $reservation->getClient()." - ".$reservation->getRoom()->getRoomNumber()." - ".$reservation->week();
         }
 
         return $results;
     }
+
+    public function displayStatusRoom() {
+        echo "<p>Status des chambres de $this</p>";
+        // $display corresponds aux éléments qui vont être affiché en bootstrap
+        $display = 
+        // Création des colonnes du tableau
+        "<table class='table status-table'></th>
+        <thead>
+        <tr>
+            <th scope='col'>Chambre</th>
+            <th scope='col'>Prix</th>
+            <th scope='col'>Wifi</th>
+            <th scope='col'>Etat</th>
+        </tr>
+        </thead>
+        <tbody>";
+
+        // Parcours de l'array $_rooms 
+        foreach ($this->_rooms as $room) {
+            $room->statusRoomWifi(); // Appel la méthode pour vérifier si la chambre a du wifi
+            $room->roomAvailable(); // Appel la méthode pour vérifier si la chambre est disponible ou réservée 
+
+            // Création des lignes du tableau
+            $display .=
+            "<tr>".
+                "<th scope='row'>$room</th>".
+                "<td>".$room->getPrice()."€</td>".
+                "<td>".$room->statusRoomWifi()."</td>".
+                "<td>".$room->roomAvailable()."</td>
+            </tr>";
+        }
+       
+        return $display;
+    } 
 
     public function addRooms(Chambre $room) {
         $this->_rooms[] = $room;
