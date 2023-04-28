@@ -7,16 +7,16 @@ class Réservation {
     private Chambre $_room;
 
     public function __construct(string $dateArrived, string $dateDeparture, Client $client, Chambre $room) {
-        $hotel = $room->getHotel();
+        $hotel = $room->getHotel(); // Récupère les informations du __toString de Hotel par l'argument $room de l'objet Chambre
         
         $this->_dateArrived = new DateTime($dateArrived);
         $this->_dateDeparture = new DateTime($dateDeparture);
         $this->_client = $client;
         $this->_room = $room;
 
-        $this->_client->addReservation($this);
-        $this->_room->addReservation($this); 
-        $hotel->addReservation($this);
+        $this->_client->addReservation($this); // Array push de l'objet Client 
+        $this->_room->addReservation($this); // Array push de l'objet Chambre
+        $hotel->addReservation($this); // Array push de l'objet Hotel en passant par l'objet Chambre
     }
 
     public function week() {
