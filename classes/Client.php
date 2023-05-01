@@ -21,7 +21,7 @@ class Client {
 
     // Méthode pour afficher les réservations d'un Client
     public function getClientReservation() {
-        $results = "Réservation de $this<br>";
+        $results = "<div style='font-size:20px'>Réservation de $this</div>";
         
         $reservationNumber = count($this->_reservations); // Compte le nombre de réservations
         
@@ -38,7 +38,7 @@ class Client {
             $priceTotal += $reservation->calculPrice(); // Attribut la valeur de la fonction calculPrice de l'objet Réservation
         }
 
-        $results .= "Total : $priceTotal €";
+        $results .= "Total : $priceTotal €<br/>";
 
         return $results;
     }
