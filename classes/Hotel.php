@@ -30,16 +30,17 @@ class Hotel {
         return " ".$this->_hotelName." ".$this->_hotelRating." ".$this->_city." "; // Fonction de concaténation du nom, du grade et de la ville de l'Hotel 
     }
 
+    // Méthode pour afficher les informations de base d'un Hotel
     public function getInfosHotel(){
-        $roomsCount = count($this->_rooms);
-        $reservationsCount = count($this->_reservations);
-        $roomsAvailable = $roomsCount - $reservationsCount;
+        $roomsCount = count($this->_rooms); // Compte le nombre de chambre de l'array $_rooms
+        $reservationsCount = count($this->_reservations); // Compte le nombre de réservation de l'array $_reservations
+        $roomsAvailable = $roomsCount - $reservationsCount; // Calcul du nombre de chambre disponible 
 
         return "<div style='font-size:20px'>".$this."</div><br/> ".
         $this->getAdress()." ".$this->getPostalCode()." ".strtoupper($this->_city)." <br/>
         Nombre de chambre : ".$roomsCount."<br/>
         Nombre de chambre réservées : ".$reservationsCount."<br/>
-        Nombre de chambre disponibles :".$roomsAvailable."<br/>";
+        Nombre de chambre disponibles : ".$roomsAvailable."<br/>";
     }
 
     // Méthode pour afficher les réservations d'un Hotel
@@ -63,7 +64,7 @@ class Hotel {
     }
 
     public function displayStatusRoom() {
-        echo "<p>Status des chambres de $this</p>";
+        echo "<div style='font-size:20px'>Status des chambres de $this</div>";
         // $display corresponds aux éléments qui vont être affiché en bootstrap
         $display = 
         // Création des colonnes du tableau
