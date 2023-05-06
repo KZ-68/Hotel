@@ -23,18 +23,18 @@ class Client {
     public function getClientReservation() {
         $results = "<div style='font-size:20px'>Réservation de $this</div>";
         
-        $reservationNumber = count($this->_reservations); // Compte le nombre de réservations
+        $reservationsCount = count($this->_reservations); // Compte le nombre de réservations
         
-        if ($reservationNumber == 0) { // En fonction du nbr de réservations, récupère la valeur de la variable et l'affiche
+        if ($reservationsCount == 0) { // En fonction du nbr de réservations, récupère la valeur de la variable et l'affiche
             $results .= "Aucune réservation !";
-        } else if ($reservationNumber == 1){
-            $results .= "<div id='reservations'>$reservationNumber Réservation</div>";
-        } else $results .= "<div id='reservations'>$reservationNumber Réservations</div>";
+        } else {
+            $results .= "<span class='badge bg-success'>$reservationsCount RÉSERVATION" . ($reservationsCount >= 2 ? "S" : "") . "</span><br/>";
+        }
 
         $priceTotal = 0; // Initialise une variable pour le prix total des réservations
         
         foreach ($this->_reservations as $reservation) {
-            $results .= $reservation->getRoom()->getHotel(). " / ".$reservation->getRoom()->getRoomNumber()." (".$reservation->getRoom()->getBedNumber()." lits - ".$reservation->getRoom()->getPrice(). " € - Wifi : ".$reservation->getRoom()->statusRoomWifi().") ".$reservation->week()."";
+            $results .= $reservation->getRoom()->getHotel(). " / ".$reservation->getRoom()->getRoomNumber()." (".$reservation->getRoom()->getBedsCount()." lits - ".$reservation->getRoom()->getPrice(). " € - Wifi : ".$reservation->getRoom()->getWifiStringRepresentation().") ".$reservation->week()."";
             $priceTotal += $reservation->calculPrice(); // Attribut la valeur de la fonction calculPrice de l'objet Réservation
         }
 
