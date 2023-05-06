@@ -31,29 +31,32 @@ class Hotel {
     }
 
     // Méthode pour afficher les informations de base d'un Hotel
-    public function getInfosHotel(){
+    public function getInfos(){ // getInfos
         $roomsCount = count($this->_rooms); // Compte le nombre de chambre de l'array $_rooms
         $reservationsCount = count($this->_reservations); // Compte le nombre de réservation de l'array $_reservations
         $roomsAvailable = $roomsCount - $reservationsCount; // Calcul du nombre de chambre disponible 
 
         return "<div style='font-size:20px'>".$this."</div><br/> ".
-        $this->getAdress()." ".$this->getPostalCode()." ".strtoupper($this->_city)." <br/>
-        Nombre de chambre : ".$roomsCount."<br/>
-        Nombre de chambre réservées : ".$reservationsCount."<br/>
-        Nombre de chambre disponibles : ".$roomsAvailable."<br/>";
+            $this->getAdress()." ".$this->getPostalCode()." ".strtoupper($this->_city)." <br/>
+            Nombre de chambres : ".$roomsCount."<br/>
+            Nombre de chambres réservées : ".$reservationsCount."<br/>
+            Nombre de chambres disponibles : ".$roomsAvailable."<br/>";
     }
 
     // Méthode pour afficher les réservations d'un Hotel
-    public function reservationHotel() {
+    public function getInfosReservations() { // getInfosReservations
         $results = "<div style='font-size:20px'>Réservation de $this</div>";
 
-        $reservationNumber = count($this->_reservations); // Compte le nombre de réservations
+        $reservationsCount = count($this->_reservations); // Compte le nombre de réservations
 
-        if ($reservationNumber == 0){ // En fonction du nbr de réservations, récupère la valeur de la variable et l'affiche
+        if ($reservationsCount == 0){ // En fonction du nbr de réservations, récupère la valeur de la variable et l'affiche
             $results .= "Aucune réservation ! <br/>";
-        } else if ($reservationNumber == 1){
-            $results .= "<div id='reservations'>$reservationNumber Réservation</div><br/>";
-        } else $results .= "<div id='reservations'>$reservationNumber Réservations</div><br/>";
+        // } else if ($reservationsCount == 1){
+        //     $results .= "<span class='badge bg-success'>1 RÉSERVATION </span><br/>";
+        // } else $results .= "<span class='badge bg-success'>$reservationsCount RÉSERVATIONS</span><br/>";
+        } else {
+            $results .= "<span class='badge bg-success'>$reservationsCount RÉSERVATION" . ($reservationsCount >= 2 ? "S" : "") . "</span><br/>";
+        }
         
         // Accède à chaque réservation et récupère le __toString de l'objet Client, le numéro de chambre en accédant par chaînage de méthodes, et la fonction week() de l'Objet Réservation 
         foreach ($this->_reservations as $reservation) { 
@@ -63,12 +66,12 @@ class Hotel {
         return $results;
     }
 
-    public function displayStatusRoom() {
-        echo "<div style='font-size:20px'>Status des chambres de $this</div>";
+    public function displayStatusRoom() { // displayStatusRooms
+        echo "<div style='font-size:18px'>Status des chambres de <span style='font-weight:700'>$this</span></div>";
         // $display corresponds aux éléments qui vont être affiché en bootstrap
         $display = 
         // Création des colonnes du tableau
-        "<table class='table status-table'></th>
+        "<table class='table'></th>
         <thead>
         <tr>
             <th scope='col'>Chambre</th>
@@ -79,21 +82,51 @@ class Hotel {
         </thead>
         <tbody>";
 
-        // Parcours de l'array $_rooms 
+        // Parcours de l'array $_rooms par la boucle foreach 
         foreach ($this->_rooms as $room) {
-            $room->statusRoomWifi(); // Appel la méthode pour vérifier si la chambre a du wifi
-            $room->roomAvailable(); // Appel la méthode pour vérifier si la chambre est disponible ou réservée 
+            $room->getRoomAvailabilityRepresentation(); // Appel la méthode pour vérifier si la chambre est disponible ou réservée 
 
             // Création des lignes du tableau
-            $display .=
+            
+            if ($room->getPrice() == 120) { 
+                $display .=
             "<tr>".
                 "<th scope='row'>$room</th>".
                 "<td>".$room->getPrice()."€</td>".
-                "<td>".$room->statusRoomWifi()."</td>".
-                "<td>".$room->roomAvailable()."</td>
-            </tr>";
+                "<td></td>".
+                "<td>".$room->getRoomAvailabilityRepresentation()."</td>".
+            "</tr>";
+            } else {
+                $display .= "";
+            }
         }
-       
+        
+            $display .=
+        "<tr id='empty_line'>".
+            "<th scope='row'></th>".
+            "<td></td>".
+            "<td></td>".
+            "<td></td>".
+        "</tr>";
+
+        foreach ($this->_rooms as $room) {
+            $room->getRoomAvailabilityRepresentation();
+
+            if ($room->getPrice() == 300) {
+                $display .=
+                "<tr>".
+                    "<th scope='row'>$room</th>".
+                    "<td>300€</td>".
+                    "<td><i class='fa-solid fa-wifi' style='color: #b5b5b5;transform: rotate(45deg);'></i></td>".
+                    "<td>".$room->getRoomAvailabilityRepresentation()."</td>".
+                "</tr>";
+            } else {
+                echo "";
+            }
+        }
+        "</tbody>
+        </table>";
+
         return $display;
     } 
 
