@@ -1,45 +1,49 @@
 <?php
 
 class Chambre  {
+    // Attributs
     private string $_roomNumber;
-    private int $_bedNumber;
+    private int $_bedsCount; // bedsCount
     private int $_price;
-    private bool $_isWifi;
+    private bool $_hasWifi; // hasWifi
     private bool $_isAvailable;
     private Hotel $_hotel;
     private array $_reservations;
     
-    public function __construct(string $roomNumber, int $bedNumber, int $price, bool $isWifi, bool $isAvailable, Hotel $hotel) {
+    // Constructeur
+    public function __construct(string $roomNumber, int $bedsCount, int $price, bool $hasWifi, bool $isAvailable, Hotel $hotel) {
         $this->_roomNumber = $roomNumber;
-        $this->_bedNumber = $bedNumber;
+        $this->_bedsCount = $bedsCount;
         $this->_price = $price;
-        $this->_isWifi = $isWifi;
+        $this->_hasWifi = $hasWifi;
         $this->_isAvailable = $isAvailable;
         $this->_hotel = $hotel;
         $this->_hotel->addRooms($this);
         $this->_reservations = [];
     }
 
+    // Méthodes
     public function __toString() {
         return $this->_roomNumber;
     }
 
-    public function statusRoomWifi() {
-        if ($this->_isWifi) {
-            return "<i class='fa-solid fa-wifi' style='color: #b5b5b5;transform: rotate(45deg);'></i>";
+    // Méthodes pour afficher l'icône Wifi si la chambre en dispose ou pas 
+    public function getWifiStringRepresentation() { // getWifiStringRepresentation
+        if ($this->_hasWifi) {
+            return "oui";
         } else {
             return "non";
         }
     }
 
-    public function roomAvailable() {
+    public function getRoomAvailabilityRepresentation() { // getRoomAvailabilityRepresentation
         if ($this->_isAvailable == true) {
-            return "<div id='available'>DISPONIBLE</div>";
+            return "<span class='badge bg-success'>DISPONIBLE</span>";
         } else if ($this->_isAvailable === null)
-            return "<div id='available'>DISPONIBLE</div>";
+            return "<span class='badge bg-success'>DISPONIBLE</span>";
         else {
             $this->_isAvailable = false;
-            return "<div id='occupied'>RESERVEE</div>";
+            return "<span class='badge bg-danger'>RÉSERVÉE</span>";
         }
     }
 
@@ -55,12 +59,12 @@ class Chambre  {
         $this->_roomNumber = $roomNumber;
     }
 
-    public function getBedNumber() {
-        return $this->_bedNumber;
+    public function getBedsCount() {
+        return $this->_bedsCount;
     }
 
-    public function setBedNumber($bedNumber) {
-        $this->_bedNumber = $bedNumber;
+    public function setBedsCount($bedsCount) {
+        $this->_bedsCount = $bedsCount;
     }
 
     public function getPrice() {
@@ -71,12 +75,12 @@ class Chambre  {
         $this->_price = $price;
     }
 
-    public function getIsWifi() {
-        return $this->_isWifi;
+    public function getHasWifi() {
+        return $this->_hasWifi;
     }
 
-    public function setIsWifi($isWifi) {
-        $this->_isWifi = $isWifi;
+    public function setHasWifi($hasWifi) {
+        $this->_hasWifi = $hasWifi;
     }
 
     public function getIsAvailable() {
