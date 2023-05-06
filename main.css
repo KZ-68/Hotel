@@ -1,25 +1,24 @@
-#occupied {
-    background-color: rgb(255, 43, 43);
-    width: 80px;
-    color: white;
-    font-size: 12px;
-    text-align: center;
+header {
+    margin-top: 60px;
+    margin-left: 58px;
+    margin-right: 58px;
 }
 
-#available {
-    background-color: rgb(56, 220, 114);
-    width: 80px;
-    color: white;
-    font-size: 12px;
-    text-align: center;
+h1 {
+    padding-bottom: 5px;
 }
 
-#reservations {
-    background-color: rgb(56, 220, 114);
-    width: 80px;
-    color: white;
-    font-size: 12px;
-    text-align: center;
+p {
+    padding: 15px 0px;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;} /* Sélectionne la ligne en position paire de mon tableau et lui applique une couleur */
+main {
+    margin: 60px;
+}
+
+#empty_line {
+    background-color: #ffffff;
+    height: 40px;
+}
+
+tbody tr:nth-child(odd) {background-color: #f2f2f2;} /* Sélectionne la ligne en position paire de mon tableau et lui applique une couleur */
